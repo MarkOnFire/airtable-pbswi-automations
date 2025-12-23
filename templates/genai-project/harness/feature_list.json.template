@@ -1,0 +1,88 @@
+{
+  "project_name": "[PROJECT_NAME]",
+  "specification": "[Brief description or path to app_spec.txt]",
+  "created": "[YYYY-MM-DD]",
+  "last_updated": "[YYYY-MM-DD]",
+  "features": [
+    {
+      "id": "1",
+      "category": "setup",
+      "description": "Project initialization and environment setup complete",
+      "steps": [
+        "Create project structure and configuration files",
+        "Set up package management and dependencies",
+        "Configure build tools and development environment",
+        "Initialize git repository with .gitignore",
+        "Verify init.sh runs successfully"
+      ],
+      "passes": true,
+      "notes": "Completed by initializer agent"
+    },
+    {
+      "id": "2",
+      "category": "functional",
+      "description": "[Example: User can create a new item in the list]",
+      "steps": [
+        "[Step 1: Navigate to the create form]",
+        "[Step 2: Fill in required fields]",
+        "[Step 3: Submit form]",
+        "[Step 4: Verify item appears in list]",
+        "[Step 5: Verify data persists after page refresh]"
+      ],
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "3",
+      "category": "ui",
+      "description": "[Example: Theme toggle switches between light and dark mode]",
+      "steps": [
+        "[Step 1: Locate theme toggle button]",
+        "[Step 2: Click toggle]",
+        "[Step 3: Verify color scheme changes]",
+        "[Step 4: Verify preference persists across sessions]"
+      ],
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "4",
+      "category": "integration",
+      "description": "[Example: API integration fetches and displays data]",
+      "steps": [
+        "[Step 1: Trigger API call]",
+        "[Step 2: Verify loading state displays]",
+        "[Step 3: Verify data renders correctly]",
+        "[Step 4: Verify error handling for failed requests]",
+        "[Step 5: Verify retry logic works]"
+      ],
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "5",
+      "category": "edge-cases",
+      "description": "[Example: Form validation handles invalid input gracefully]",
+      "steps": [
+        "[Step 1: Submit form with empty required fields]",
+        "[Step 2: Verify validation messages appear]",
+        "[Step 3: Submit form with invalid data format]",
+        "[Step 4: Verify appropriate error messages]",
+        "[Step 5: Verify form state resets after successful submission]"
+      ],
+      "passes": false,
+      "notes": ""
+    }
+  ],
+  "metadata": {
+    "total_features": 5,
+    "completed": 1,
+    "in_progress": 0,
+    "remaining": 4,
+    "completion_percentage": 20
+  },
+  "instructions": {
+    "for_initializer": "Generate 50-200 comprehensive test cases covering setup, functional, ui, integration, and edge-cases categories. Be exhaustive - missing features mean incomplete project.",
+    "for_coding_agent": "Implement ONE feature per session. Only mark 'passes: true' after thorough verification (use browser automation for web apps). Update 'last_updated' timestamp and 'metadata' counts after each change. Add session notes to 'notes' field."
+  }
+}

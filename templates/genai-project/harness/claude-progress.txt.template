@@ -1,0 +1,141 @@
+# Claude Progress Log
+
+**Project:** [PROJECT_NAME]
+**Started:** [YYYY-MM-DD]
+**Last Updated:** [YYYY-MM-DD]
+
+---
+
+## Session 1 - Initialization ([YYYY-MM-DD HH:MM])
+
+**Agent:** initializer
+
+**Objectives:**
+- Read project specification
+- Generate comprehensive feature_list.json
+- Create init.sh for environment setup
+- Initialize git repository
+- Document initial session
+
+**Completed:**
+- Created feature_list.json with [N] test cases across categories:
+  - Setup: [N] features
+  - Functional: [N] features
+  - UI: [N] features
+  - Integration: [N] features
+  - Edge cases: [N] features
+- Created init.sh with setup commands for [describe stack]
+- Initialized git repository with clean .gitignore
+- Verified init.sh runs successfully
+
+**Feature List Status:**
+- Total features: [N]
+- Completed: 1 (project setup)
+- Remaining: [N-1]
+
+**Notes:**
+- [Any important decisions or considerations]
+- [Dependencies or prerequisites identified]
+- [Known challenges or areas requiring attention]
+
+**Git Commit:** [commit hash] - "chore: Initialize project structure"
+
+**Next Steps:**
+- Ready for coding agent to begin feature implementation
+- Start with feature ID [N] ([category]: [brief description])
+
+---
+
+## Session 2 - [Feature Name/ID] ([YYYY-MM-DD HH:MM])
+
+**Agent:** coding-agent
+
+**Session Start Protocol:**
+- ✓ Read claude-progress.txt
+- ✓ Read feature_list.json
+- ✓ Reviewed git log (last 20 commits)
+- ✓ Ran ./init.sh successfully
+- ✓ Verified [basic functionality] still working
+
+**Target Feature:**
+- ID: [N]
+- Category: [category]
+- Description: [full feature description]
+
+**Implementation:**
+- [Brief description of approach taken]
+- [Key files created/modified]
+- [Technical decisions made]
+
+**Testing:**
+- [Testing method used: browser automation, manual verification, unit tests]
+- [Specific test cases verified]
+- [Any issues encountered and resolved]
+
+**Result:**
+- ✓ Feature implementation complete
+- ✓ All test steps passing
+- ✓ Updated feature_list.json (passes: true)
+- ✓ Git commit created
+- ✓ Working tree clean
+
+**Feature List Status:**
+- Total features: [N]
+- Completed: [N]
+- Remaining: [N]
+- Progress: [N]%
+
+**Blockers/Issues:**
+- [None / List any unresolved issues]
+
+**Notes:**
+- [Observations about the codebase]
+- [Patterns or conventions established]
+- [Suggestions for future sessions]
+
+**Git Commit:** [commit hash] - "[type]: [description]"
+
+**Next Steps:**
+- Continue with feature ID [N] ([category]: [brief description])
+
+---
+
+## Session 3 - [Feature Name/ID] ([YYYY-MM-DD HH:MM])
+
+[Repeat structure from Session 2]
+
+---
+
+## Template Instructions
+
+**For Initializer Agent:**
+1. Copy this template to project root as `claude-progress.txt`
+2. Fill in Session 1 details completely
+3. Remove this instructions section
+
+**For Coding Agent:**
+1. ALWAYS read this file at session start
+2. Add new session entry at bottom (keep chronological order)
+3. Follow session start protocol checklist
+4. Document thoroughly - future sessions depend on this memory
+5. Update "Last Updated" timestamp at top
+6. Keep entries concise but complete
+
+**Session Entry Checklist:**
+- [ ] Session number and date/time
+- [ ] Agent name
+- [ ] Session start protocol completion
+- [ ] Feature ID and description
+- [ ] Implementation summary
+- [ ] Testing verification
+- [ ] Result checklist (all items completed)
+- [ ] Feature list status (current totals)
+- [ ] Git commit hash and message
+- [ ] Next steps identified
+
+**Memory Preservation:**
+- This file is your only memory between sessions
+- Be specific about decisions, patterns, and conventions
+- Document workarounds, gotchas, and technical debt
+- Note dependencies between features
+- Track architectural decisions and rationale
