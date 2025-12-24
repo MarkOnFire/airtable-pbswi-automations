@@ -1,0 +1,39 @@
+# Environment variables (contains API keys and secrets)
+.env
+.env.local
+.env.*.local
+
+# Python virtual environments
+.venv/
+.venv-crawl4ai/
+venv/
+env/
+.python-version
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+*.egg-info/
+
+# Playwright browsers
+.cache/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Node (if applicable)
+node_modules/
