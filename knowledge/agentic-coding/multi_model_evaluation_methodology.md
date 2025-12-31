@@ -108,7 +108,7 @@ This agent acts as an intelligent router. When assigned a task, its job is to ch
 
 4.  **Task Delegation**: The Interviewer Agent formats the original, full task prompt and delegates it to the selected LLM. It then returns the result to the user or the next agent in the chain.
 
-### 4.2. Integration into `workspace_ops`
+### 4.2. Integration into `the-lodge`
 
 The Interviewer Agent should be integrated into your existing multi-agent framework (`conventions/AGENT_COOPERATION.md`) as a specialized "dispatcher" or "router" agent. It can be the first agent in any complex workflow, ensuring that all subsequent sub-tasks are handled by the most appropriate model.
 

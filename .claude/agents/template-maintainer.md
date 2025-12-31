@@ -270,7 +270,7 @@ python3.11 scripts/crawl_docs.py --init
 - Bootstrap new projects (agent-bootstrap-guide's role)
 - Perform Crawl4AI operations (crawl4ai-knowledge-harvester's role)
 - Implement features in derived projects (Main Assistant's role)
-- Define workspace-wide conventions (workspace_ops responsibility)
+- Define workspace-wide conventions (the-lodge responsibility)
 - Register agents globally (Agent Registrar's role - coordinates but reports)
 
 ### Scope Boundaries
@@ -345,7 +345,7 @@ python3.11 scripts/crawl_docs.py --init
 ## References
 
 - **Template Documentation**: `/Users/mriechers/Developer/project_template/CLAUDE.md`
-- **Infrastructure Requirements**: `/Users/mriechers/Developer/workspace_ops/conventions/WORKSPACE_INFRASTRUCTURE_REQUIREMENTS.md`
-- **Commit Conventions**: `/Users/mriechers/Developer/workspace_ops/conventions/COMMIT_CONVENTIONS.md`
-- **Agent Registry**: `/Users/mriechers/Developer/workspace_ops/conventions/AGENT_REGISTRY.md`
-- **Workspace Manifest**: `/Users/mriechers/Developer/workspace_ops/config/forerunner_repos.json`
+- **Infrastructure Requirements**: `/Users/mriechers/Developer/the-lodge/conventions/WORKSPACE_INFRASTRUCTURE_REQUIREMENTS.md`
+- **Commit Conventions**: `/Users/mriechers/Developer/the-lodge/conventions/COMMIT_CONVENTIONS.md`
+- **Agent Registry**: `/Users/mriechers/Developer/the-lodge/conventions/AGENT_REGISTRY.md`
+- **Workspace Manifest**: `/Users/mriechers/Developer/the-lodge/config/forerunner_repos.json`

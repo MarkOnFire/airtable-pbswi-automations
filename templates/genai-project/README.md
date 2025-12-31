@@ -60,7 +60,7 @@ See `harness/README.md` and main repository's `docs/harness-guide.md` for comple
 
 ## Co-Authors
 
-This project is developed collaboratively with AI assistance. Commit attribution follows the workspace conventions in `/Users/mriechers/Developer/workspace_ops/conventions/COMMIT_CONVENTIONS.md`.
+This project is developed collaboratively with AI assistance. Commit attribution follows the workspace conventions in `/Users/mriechers/Developer/the-lodge/conventions/COMMIT_CONVENTIONS.md`.
 
 | Agent | Role | Recent Commits |
 |-------|------|----------------|

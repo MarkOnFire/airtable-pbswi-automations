@@ -401,8 +401,8 @@ In the template repository itself:
 ## References
 
 - **Template Documentation**: `/Users/mriechers/Developer/project_template/CLAUDE.md`
-- **Infrastructure Requirements**: `/Users/mriechers/Developer/workspace_ops/conventions/WORKSPACE_INFRASTRUCTURE_REQUIREMENTS.md`
-- **Agent Registry**: `/Users/mriechers/Developer/workspace_ops/conventions/AGENT_REGISTRY.md`
+- **Infrastructure Requirements**: `/Users/mriechers/Developer/the-lodge/conventions/WORKSPACE_INFRASTRUCTURE_REQUIREMENTS.md`
+- **Agent Registry**: `/Users/mriechers/Developer/the-lodge/conventions/AGENT_REGISTRY.md`
 - **Git Best Practices**: Use `git mv` to preserve history, commit organization changes separately
 
 ## Philosophy

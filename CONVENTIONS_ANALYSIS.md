@@ -1,7 +1,7 @@
 # Workspace Conventions Analysis: project_template Gap Report
 
 **Prepared**: 2025-11-13  
-**Scope**: Comparison of workspace_ops/conventions standards vs. project_template implementation
+**Scope**: Comparison of the-lodge/conventions standards vs. project_template implementation
 
 ---
 
@@ -17,9 +17,9 @@ The project_template repository is **Level 2 Compliant (Standard)** with the wor
 
 ---
 
-## CONVENTIONS DISCOVERED IN workspace_ops
+## CONVENTIONS DISCOVERED IN the-lodge
 
-The workspace defines **3 key convention documents** in `/Users/mriechers/Developer/workspace_ops/conventions/`:
+The workspace defines **3 key convention documents** in `/Users/mriechers/Developer/the-lodge/conventions/`:
 
 ### 1. WORKSPACE_INFRASTRUCTURE_REQUIREMENTS.md
 Defines **6 mandatory requirements** organized into **3 compliance levels**:
@@ -61,7 +61,7 @@ Central registry of 12 specialized agents with:
 
 ### 4. Git Hooks
 Workspace-wide commit validator at:
-`/Users/mriechers/Developer/workspace_ops/conventions/git-hooks/commit-msg`
+`/Users/mriechers/Developer/the-lodge/conventions/git-hooks/commit-msg`
 
 - **Purpose**: Informational reminder (non-blocking)
 - **Pattern**: Individual repos delegate via `.githooks/commit-msg`
@@ -107,7 +107,7 @@ Workspace-wide commit validator at:
 - File is executable
 
 #### ✅ Workspace Manifest
-- Listed in `/Users/mriechers/Developer/workspace_ops/config/forerunner_repos.json`
+- Listed in `/Users/mriechers/Developer/the-lodge/config/forerunner_repos.json`
 - Status: "active"
 - Remote: git@github.com:MarkOnFire/gai-project-template.git
 
@@ -155,7 +155,7 @@ mkdir -p .claude/agents
 | 2 | Update AGENTS.md content | MEDIUM | 30 min | Correct documentation |
 | 3 | Create template-specific agents | MEDIUM | 1-2 hrs | Fuller agent ecosystem |
 | 4 | Enhance CLAUDE.md | MEDIUM | 20 min | Better guidance |
-| 5 | Create workspace_ops/templates/ | LOW | 1 hr | Centralized templates |
+| 5 | Create the-lodge/templates/ | LOW | 1 hr | Centralized templates |
 
 ---
 
@@ -238,7 +238,7 @@ Suggest creating:
 - **Reminder**: AI agents should include `[Agent: <name>]`
 
 ### Workspace Hook
-- **Location**: `/Users/mriechers/Developer/workspace_ops/conventions/git-hooks/commit-msg`
+- **Location**: `/Users/mriechers/Developer/the-lodge/conventions/git-hooks/commit-msg`
 - **Benefit**: Centralized maintenance, automatic propagation
 
 ### Future Enforcement Options (Per Conventions Document)
@@ -257,7 +257,7 @@ Suggest creating:
 mkdir -p .claude/agents
 
 # 2. Verify compliance
-~/Developer/workspace_ops/scripts/audit-repo-infrastructure.sh
+~/Developer/the-lodge/scripts/audit-repo-infrastructure.sh
 ```
 
 ### SHORT-TERM (This Week)
@@ -274,7 +274,7 @@ mkdir -p .claude/agents
 
 ### MEDIUM-TERM (This Month)
 1. Enhance README.md Co-Authors section
-2. Create workspace_ops/templates/ directory
+2. Create the-lodge/templates/ directory
 3. Document compliance tooling in CLAUDE.md
 4. Create scripts/bootstrap-project.sh
 
@@ -290,7 +290,7 @@ mkdir -p .claude/agents
 ### Run Compliance Audit
 ```bash
 cd /Users/mriechers/Developer/project_template
-~/Developer/workspace_ops/scripts/audit-repo-infrastructure.sh
+~/Developer/the-lodge/scripts/audit-repo-infrastructure.sh
 ```
 
 ### View Agent Commits
@@ -315,14 +315,14 @@ ls -la .githooks/
 ## REFERENCES
 
 ### Workspace Convention Documents
-- **Location**: `/Users/mriechers/Developer/workspace_ops/conventions/`
+- **Location**: `/Users/mriechers/Developer/the-lodge/conventions/`
 - **WORKSPACE_INFRASTRUCTURE_REQUIREMENTS.md** - Infrastructure standards
 - **COMMIT_CONVENTIONS.md** - Commit message format
 - **AGENT_REGISTRY.md** - Central agent catalog
 - **git-hooks/commit-msg** - Workspace-wide commit validator
 
 ### Related Workspace Repos
-- **workspace_ops**: Central operational hub
+- **the-lodge**: Central operational hub
 - **project_template**: This repository (starter template)
 - **12 other active projects**: See forerunner_repos.json
 

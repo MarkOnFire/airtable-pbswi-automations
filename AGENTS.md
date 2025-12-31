@@ -323,7 +323,7 @@ These agents are available across all workspace projects:
 - **librarian**: Repository health monitoring and workspace audits
 - **Agent Registrar**: Agent lifecycle management and registration
 
-See `/Users/mriechers/Developer/workspace_ops/conventions/AGENT_REGISTRY.md` for complete workspace agent documentation.
+See `/Users/mriechers/Developer/the-lodge/conventions/AGENT_REGISTRY.md` for complete workspace agent documentation.
 
 ## Agent Registration Process
 
@@ -368,9 +368,9 @@ When adapting this template for a specific project:
 
 ## Questions and Support
 
-- **Agent Registry**: `/Users/mriechers/Developer/workspace_ops/conventions/AGENT_REGISTRY.md`
-- **Commit Conventions**: `/Users/mriechers/Developer/workspace_ops/conventions/COMMIT_CONVENTIONS.md`
-- **Infrastructure Requirements**: `/Users/mriechers/Developer/workspace_ops/conventions/WORKSPACE_INFRASTRUCTURE_REQUIREMENTS.md`
+- **Agent Registry**: `/Users/mriechers/Developer/the-lodge/conventions/AGENT_REGISTRY.md`
+- **Commit Conventions**: `/Users/mriechers/Developer/the-lodge/conventions/COMMIT_CONVENTIONS.md`
+- **Infrastructure Requirements**: `/Users/mriechers/Developer/the-lodge/conventions/WORKSPACE_INFRASTRUCTURE_REQUIREMENTS.md`
 - **Bootstrap Guide**: `docs/bootstrap.md`
 
 For agent-related questions, consult workspace conventions or invoke Agent Registrar.

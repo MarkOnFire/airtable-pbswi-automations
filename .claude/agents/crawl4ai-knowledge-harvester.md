@@ -199,4 +199,4 @@ python3.11 scripts/crawl_docs.py --dry-run
 - **Bootstrap Guide**: `/Users/mriechers/Developer/project_template/docs/bootstrap.md`
 - **Crawler Script**: `/Users/mriechers/Developer/project_template/scripts/crawl_docs.py`
 - **Crawl4AI Docs**: https://crawl4ai.com/
-- **Workspace Conventions**: `/Users/mriechers/Developer/workspace_ops/conventions/`
+- **Workspace Conventions**: `/Users/mriechers/Developer/the-lodge/conventions/`

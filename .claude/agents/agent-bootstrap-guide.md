@@ -299,6 +299,6 @@ python3.11 -c "from playwright.sync_api import sync_playwright; print('OK')"
 
 - **Template Documentation**: `/Users/mriechers/Developer/project_template/CLAUDE.md`
 - **Bootstrap Guide**: `/Users/mriechers/Developer/project_template/docs/bootstrap.md`
-- **Infrastructure Requirements**: `/Users/mriechers/Developer/workspace_ops/conventions/WORKSPACE_INFRASTRUCTURE_REQUIREMENTS.md`
-- **Commit Conventions**: `/Users/mriechers/Developer/workspace_ops/conventions/COMMIT_CONVENTIONS.md`
-- **Agent Registry**: `/Users/mriechers/Developer/workspace_ops/conventions/AGENT_REGISTRY.md`
+- **Infrastructure Requirements**: `/Users/mriechers/Developer/the-lodge/conventions/WORKSPACE_INFRASTRUCTURE_REQUIREMENTS.md`
+- **Commit Conventions**: `/Users/mriechers/Developer/the-lodge/conventions/COMMIT_CONVENTIONS.md`
+- **Agent Registry**: `/Users/mriechers/Developer/the-lodge/conventions/AGENT_REGISTRY.md`

@@ -355,7 +355,7 @@ filter_formula = "{QC} = 'Passed'"
 - Resolved link format issues (Interface links don't load records reliably)
 - Implemented QC date parsing for M/D/YYYY format
 - Final format: checkboxes, due dates, details, AirTable links
-- Moved learnings from workspace-ops to this repo
+- Moved learnings from the-lodge to this repo
 
 ---
 
@@ -364,5 +364,5 @@ filter_formula = "{QC} = 'Passed'"
 - **This Repo:** `docs/DESIGN_DOCUMENT.md` - Core AirTable schema and automation design
 - **Obsidian Vault MCP:** `/Users/mriechers/Developer/obsidian-vault-mcp`
 - **AirTable MCP:** `/Users/mriechers/Developer/airtable-mcp-server`
-- **Original Brainstorm:** `/Users/mriechers/Developer/workspace-ops/brainstorming/airtable-obsidian-sync.md`
+- **Original Brainstorm:** `/Users/mriechers/Developer/the-lodge/brainstorming/airtable-obsidian-sync.md`
 - **AirTable API Docs:** https://airtable.com/developers/web/api/introduction

@@ -27,7 +27,7 @@ Key upstream articles that shaped the harness and orchestrator scaffolding:
 - Anthropic — Autonomous coding quickstart: https://github.com/anthropics/claude-quickstarts/tree/main/autonomous-coding
 - Anthropic — Claude 4 best practices: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-4-best-practices
 - Anthropic — MCP overview and protocol site: https://modelcontextprotocol.io and https://github.com/anthropics/mcp
-- Anthropic — MCP workspace applications (internal synthesis): derived from `knowledge/agentic-coding/mcp_workspace_applications.md` and workspace_ops patterns (no public URL).
+- Anthropic — MCP workspace applications (internal synthesis): derived from `knowledge/agentic-coding/mcp_workspace_applications.md` and the-lodge patterns (no public URL).
 - Anthropic — Claude Code best practices: https://www.anthropic.com/engineering/claude-code-best-practices
 - Ran Isenberg — Agentic AI prompting best practices: https://www.ranthebuilder.cloud/post/agentic-ai-prompting-best-practices-for-smarter-vibe-coding
 - Reddit — One year of AI agent lessons: https://www.reddit.com/r/AI_Agents/comments/1lpj771/ai_agent_best_practices_from_one_year_as_ai/
@@ -74,8 +74,8 @@ git log --grep="Agent: crawl4ai-knowledge-harvester" --since="1 week ago"
 This template follows workspace-wide conventions for agent collaboration:
 
 - **Commit Attribution**: All AI-generated commits include `[Agent: <name>]` after the subject line
-- **Agent Registry**: Template agents registered in `/Users/mriechers/Developer/workspace_ops/conventions/AGENT_REGISTRY.md`
+- **Agent Registry**: Template agents registered in `/Users/mriechers/Developer/the-lodge/conventions/AGENT_REGISTRY.md`
 - **Infrastructure Compliance**: Maintains Level 3 compliance with workspace requirements
 - **Cross-Platform**: Agents work with Claude Code, Cursor, GitHub Copilot, and other AI tools
 
-See [workspace conventions](../../workspace_ops/conventions/COMMIT_CONVENTIONS.md) for complete details on agent collaboration and commit standards.
+See [workspace conventions](../../the-lodge/conventions/COMMIT_CONVENTIONS.md) for complete details on agent collaboration and commit standards.

@@ -1,2 +1,2 @@
 #!/bin/bash
-"/Users/mriechers/Developer/workspace_ops/conventions/git-hooks/commit-msg" "$@"
+"/Users/mriechers/Developer/the-lodge/conventions/git-hooks/commit-msg" "$@"

@@ -14,7 +14,7 @@ This is a template repository for bootstrapping generative AI projects. It provi
 
 **IMPORTANT**: This project follows workspace-wide commit conventions.
 
-See: `/Users/mriechers/Developer/workspace_ops/conventions/COMMIT_CONVENTIONS.md`
+See: `/Users/mriechers/Developer/the-lodge/conventions/COMMIT_CONVENTIONS.md`
 
 **Quick Reference**: All AI-generated commits must include `[Agent: <name>]` after the subject line.
 
@@ -121,15 +121,15 @@ Agents use browser tools to:
 
 ## Available MCP Servers
 
-Model Context Protocol (MCP) servers extend Claude's capabilities with specialized tools. These are deployed globally and available in all projects via `workspace_ops`.
+Model Context Protocol (MCP) servers extend Claude's capabilities with specialized tools. These are deployed globally and available in all projects via `the-lodge`.
 
 ### CLI Agent Server (Multi-LLM Code Review & Queries)
 
 **Purpose**: Get independent perspectives from other AI models (Gemini, Claude CLI, Codex) for code review, architecture decisions, or general queries. **Cost-effective alternative to parallel agent execution.**
 
-**Location**: `/Users/mriechers/Developer/workspace_ops/mcp-servers/cli-agent-server/`
+**Location**: `/Users/mriechers/Developer/the-lodge/mcp-servers/cli-agent-server/`
 **Status**: ✅ Active and deployed globally
-**Registry**: See `workspace_ops/config/mcp-configs/mcp_servers_registry.json`
+**Registry**: See `the-lodge/config/mcp-configs/mcp_servers_registry.json`
 
 **Why Use This Instead of Parallel Agents:**
 - **Lower cost**: Uses local CLI agents with your existing API keys
@@ -205,9 +205,9 @@ Model Context Protocol (MCP) servers extend Claude's capabilities with specializ
 - Tasks requiring agent-specific specialization
 
 **Configuration:**
-- Already deployed globally via `workspace_ops/scripts/deploy_mcp_configs.sh`
-- Requires API keys in workspace_ops `.env`: `GEMINI_API_KEY`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`
-- Logs: `/Users/mriechers/Developer/workspace_ops/mcp-servers/cli-agent-server/logs/`
+- Already deployed globally via `the-lodge/scripts/deploy_mcp_configs.sh`
+- Requires API keys in the-lodge `.env`: `GEMINI_API_KEY`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`
+- Logs: `/Users/mriechers/Developer/the-lodge/mcp-servers/cli-agent-server/logs/`
 
 **Example Workflows:**
 
@@ -237,7 +237,7 @@ Model Context Protocol (MCP) servers extend Claude's capabilities with specializ
 **claude-chat-export**: Export Claude conversation threads
 **fantastical**: Calendar event management
 
-See `workspace_ops/CLAUDE.md` for complete MCP server documentation.
+See `the-lodge/CLAUDE.md` for complete MCP server documentation.
 
 ### Project Files
 
@@ -364,7 +364,7 @@ The `knowledge/` directory stores structured documentation:
 
 ### Git Hooks
 
-The repository uses workspace-wide git hooks from `/Users/mriechers/Developer/workspace_ops/conventions/git-hooks/`.
+The repository uses workspace-wide git hooks from `/Users/mriechers/Developer/the-lodge/conventions/git-hooks/`.
 
 Configured in `.githooks/commit-msg` - delegates to workspace commit-msg hook for enforcement.
 

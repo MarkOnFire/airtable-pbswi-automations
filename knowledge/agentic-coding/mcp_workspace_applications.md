@@ -1,13 +1,13 @@
-# MCP Applications for workspace_ops
+# MCP Applications for the-lodge
 
 **Last Updated**: 2025-11-19
-**Purpose**: Analyze how Model Context Protocol could improve or replace current workspace_ops patterns and methodologies
+**Purpose**: Analyze how Model Context Protocol could improve or replace current the-lodge patterns and methodologies
 
 ---
 
 ## Executive Summary
 
-The Model Context Protocol (MCP) offers significant opportunities to modernize and simplify workspace_ops patterns, particularly:
+The Model Context Protocol (MCP) offers significant opportunities to modernize and simplify the-lodge patterns, particularly:
 
 1. **Cross-LLM Agent Communication**: MCP provides a standardized way for Claude to work with other LLMs (Codex, Gemini, DeepSeek, etc.)
 2. **Simplified Agent Contracts**: Replace custom TypeScript-style contracts with MCP's built-in resource/tool/prompt system
@@ -19,7 +19,7 @@ The Model Context Protocol (MCP) offers significant opportunities to modernize a
 
 ## Current Architecture Analysis
 
-### Existing Patterns in workspace_ops
+### Existing Patterns in the-lodge
 
 #### 1. Agent Cooperation Conventions (`conventions/AGENT_COOPERATION.md`)
 
@@ -313,7 +313,7 @@ async def get_knowledge(topic: str) -> Resource:
     Access knowledge base articles by topic.
     """
     # Read from knowledge/ directory
-    file_path = f"/Users/mriechers/Developer/workspace-ops/knowledge/{topic}.md"
+    file_path = f"/Users/mriechers/Developer/the-lodge/knowledge/{topic}.md"
 
     with open(file_path, 'r') as f:
         content = f.read()
@@ -503,13 +503,13 @@ result = await mcp.invoke_tool("agent-workflows", "execute_workflow", {
 **Goal**: Establish MCP infrastructure without breaking existing patterns.
 
 **Tasks**:
-1. Create `mcp-servers/` directory in workspace_ops
+1. Create `mcp-servers/` directory in the-lodge
 2. Implement basic MCP servers:
    - `knowledge-server.py` - Expose knowledge/ directory as resources
    - `registry-server.py` - Dynamic agent discovery
 3. Configure Claude Desktop to connect to local MCP servers
 4. Test resource access from Claude
-5. Document MCP setup in workspace_ops/README.md
+5. Document MCP setup in the-lodge/README.md
 
 **Deliverables**:
 - Working MCP servers running locally
@@ -534,7 +534,7 @@ result = await mcp.invoke_tool("agent-workflows", "execute_workflow", {
 4. Test cross-LLM invocation:
    - Claude invokes Codex for code generation
    - Results returned to Claude via MCP
-5. Document usage patterns in workspace_ops/knowledge/
+5. Document usage patterns in the-lodge/knowledge/
 
 **Deliverables**:
 - Claude can invoke Codex via standardized MCP interface
@@ -709,7 +709,7 @@ result = await mcp.invoke_tool("agent-workflows", "execute_workflow", {
 
 ## Conclusion
 
-**MCP offers transformative potential for workspace_ops**, particularly in enabling Claude to work seamlessly with other LLMs like Codex. The migration path is clear:
+**MCP offers transformative potential for the-lodge**, particularly in enabling Claude to work seamlessly with other LLMs like Codex. The migration path is clear:
 
 1. ✅ **Immediate value**: Knowledge management and cross-LLM communication
 2. ✅ **Medium-term gains**: Simplified agent contracts and automatic registry
