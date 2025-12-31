@@ -55,12 +55,24 @@ ENVIRONMENT:
                       Reads from /Users/mriechers/Developer/airtable-mcp-server/.env
                       or falls back to environment variable
 
+SST CONTENT HANDLING:
+---------------------
+SST (Single Source of Truth) content items are distributed to their related
+project notes rather than a single consolidated note:
+
+1. SST items with a linked Project → added to matching project note
+2. SST items without a project link → go to "WEEKLY — Content Posting" fallback
+3. Due dates are calculated as 30 days before Digital Premiere date
+
+SST sections use separate markers (<!-- AIRTABLE_SST_START/END -->) from
+the Tasks section, so both can be updated independently without conflict.
+
 OUTPUT LOCATIONS:
 -----------------
     New notes: 0 - INBOX/
     Existing notes: Updated in place wherever found
     Dashboard: 0 - INBOX/AIRTABLE Dashboard.md (or existing location)
-    Content Pipeline: 0 - INBOX/General Content Planning and Posting.md
+    Fallback content: 0 - INBOX/WEEKLY — Content Posting.md
 
 AIRTABLE CONFIGURATION:
 -----------------------
@@ -95,6 +107,16 @@ SST_INTERFACE = "pagCh7J2dYzqPC3bH"
 TIME_OFF_PROJECTS = ["Personal Time Off (Vac/Sick/Legal Holiday)"]
 PROFESSIONAL_DEV_PROJECTS = ["Digital FY26 PMDP Goals", "SEMrush | Digital FY26 PMDP Goals"]
 
+# Project name aliases (AirTable name → Obsidian note name)
+# Used when the base project name doesn't match the Obsidian note title
+PROJECT_ALIASES = {
+    "University Place": "UPlace",
+    "The Great Wisconsin Quilt Show": "Quilt Show",
+    "Wisconsin Life": "WI Life",
+    "Wisconsin Foodie": "WI Foodie",
+    "John McGivern's Main Streets": "Main Streets",
+}
+
 # Statuses for ongoing assignments (not due-date driven)
 ONGOING_STATUSES = ["Milestone", "Ongoing"]
 
@@ -117,6 +139,84 @@ STATUS_ORDER = [
 # FILL = filler/interstitial, PNGV = planned giving, 4MBR = membership spots
 SST_PROMO_PREFIXES = ["FILL", "PNGV", "4MBR"]
 
+# Media ID prefix to project name mapping (for fallback matching)
+# Prefixes ending with * have variable suffixes
+MEDIA_ID_PREFIX_MAP = {
+    "9TMM": "30-Minute Music Hour",
+    "6AKA": "aka Teacher",
+    "6AMT": "American Players Theater",
+    "9FTB": "Around the Farm Table",
+    "BSWN": "Best of Sewing with Nancy",
+    "2CSS": "Candidate Statements",
+    "6CWI": "Climate Wisconsin",
+    "2CSQ": "Concerts on the Square",
+    "9DCU": "Director's Cut",
+    "2DCP": "Director's Cut Presents",
+    "9DCF": "Director's Cut Wisconsin Film Festival Edition",
+    "6DDD": "Dreaming Decolonizing Dinner",
+    "6EDP": "Education Promos",
+    "6GLE": "Garden Expo",
+    "2KGG": "Get Up and Go",
+    "6GWQ": "Great Wisconsin Quilt Show",
+    "2HNW": "Here and Now",
+    "6HNS": "Here and Now Digital Shorts",
+    "6DNC": "Here and Now DNC",
+    "6HNP": "Here and Now Packages",
+    "6RNC": "Here and Now RNC",
+    "6HYM": "Hometown Stories Youth Media",
+    "6INF": "In Focus with Murv Seymour",
+    "6IFT": "Indigenous Food Traditions",
+    "2JRY": "Jerry Awards",
+    "6JWT": "Judy Woodruff Talk",
+    "6LGS": "Let's Grow Stuff",
+    "6LSM": "Live from Mead Witter School of Music",
+    "2MLK": "Martin Luther King Jr. Day Celebration",
+    "6MST": "Matterport Studio Tour",
+    "6MTL": "Meet the Lab",
+    "6HHA": "Michael Ford: Hip Hop Architect",
+    "6NWD": "Noon Wednesday",
+    "OUCC": "Once Upon A Christmas Cheery in the Lab of Shakhashiri",
+    "6NHB": "PBS Newshour Breaks",
+    "6PFP": "Programming Fall Preview",
+    "6PRO": "Promos [Captioned]",
+    "6PPW": "Promoting PBS Wisconsin",
+    "6QFI": "Quick Fit with Cassy",
+    "6RES": "Re/sound: Songs of Wisconsin",
+    "SCIF": "Science is Fun",
+    "6SIF": "Science is Fun Presentations",
+    "6SWF": "Sifting, Winnowing and Film Burning",
+    "6JSC": "SJMC Journalism Class",
+    "2SHC": "State Honors Concert",
+    "2SOS": "State of the State",
+    "9SOT": "State of the Tribes",
+    "6STG": "Style and Grace",
+    "6TLB": "The Look Back",
+    "6TWS": "The Ways",
+    "9UNP": "University Place",
+    "2VB2": "UW Varsity Band Spring Concert",
+    "6WPS": "Welcome Poets",
+    "6WSR": "Whoopensocker",
+    "6WRM": "Why Race Matters",
+    "6WIB": "Wisconsin Biographies",
+    "2GBA": "Wisconsin Budget Address",
+    "6WFN": "Wisconsin First Nations",
+    "2WIF": "Wisconsin Foodie",
+    "2WLI": "Wisconsin Life",
+    "6WLI": "Wisconsin Life Digital Shorts",
+    "6LIT": "Wisconsin Lighthouses",
+    "6IOO": "Wisconsin School of the Air: Instruments of the Orchestra",
+    "6KNG": "Wisconsin School of the Air: Kindergarten",
+    "6LTD": "Wisconsin School of the Air: Let's Draw",
+    "6PWI": "Wisconsin School of the Air: Pioneer Wisconsin",
+    "6RMC": "Wisconsin School of the Air: Ranger Mac",
+    "6WWN": "Wisconsin School of the Air: Wonderful World of Nature",
+    "6YEX": "Wisconsin School of the Air: Young Experimenters",
+    "2YAC": "Wisconsin Young Artists Compete: The Final Forte",
+    "6WPR": "WPR",
+    "6CEN": "WPR Centennial",
+    "2BUC": "Bucky!",
+}
+
 OBSIDIAN_VAULT_PATH = Path(
     "/Users/mriechers/Library/Mobile Documents/iCloud~md~obsidian/Documents/MarkBrain"
 )
@@ -128,13 +228,21 @@ OUTPUT_NOTE_PATH = PBSWI_FOLDER / "AIRTABLE.md"  # Legacy, kept for reference
 CONTENT_PIPELINE_PROJECT = "General Content Planning and Posting"
 PROFESSIONAL_DEV_PROJECT = "Professional Development"
 TIME_OFF_PROJECT = "Time Off"
+CONTENT_FALLBACK_PROJECT = "Content Posting"  # Fallback for unmatched SST items
+
+# Projects table ID (for resolving SST project links)
+PROJECTS_TABLE_ID = "tblU9LfZeVNicdB5e"
 
 # Load API key from airtable-mcp-server .env
 ENV_FILE = Path("/Users/mriechers/Developer/airtable-mcp-server/.env")
 
-# AirTable section marker for embedding in existing notes
+# AirTable section markers for embedding in existing notes
+# Tasks section (original)
 AIRTABLE_SECTION_START = "<!-- AIRTABLE_SYNC_START -->"
 AIRTABLE_SECTION_END = "<!-- AIRTABLE_SYNC_END -->"
+# SST Content section (separate, always appended after tasks)
+SST_SECTION_START = "<!-- AIRTABLE_SST_START -->"
+SST_SECTION_END = "<!-- AIRTABLE_SST_END -->"
 
 # Template for new project notes (matches Obsidian projects-template.md)
 NEW_PROJECT_TEMPLATE = """---
@@ -247,6 +355,38 @@ def fetch_all_records(table_id: str, api_key: str, view: str = None,
     return records
 
 
+def fetch_project_names(project_ids: list[str], api_key: str) -> dict[str, str]:
+    """
+    Fetch project names for a list of project record IDs.
+
+    Returns dict mapping record_id -> project_name
+    """
+    if not project_ids:
+        return {}
+
+    project_map = {}
+
+    # Fetch in batches to avoid formula length limits
+    batch_size = 50
+    for i in range(0, len(project_ids), batch_size):
+        batch_ids = project_ids[i:i + batch_size]
+
+        # Build OR formula for batch
+        or_conditions = [f"RECORD_ID() = '{rid}'" for rid in batch_ids]
+        formula = f"OR({', '.join(or_conditions)})"
+
+        records = fetch_all_records(
+            PROJECTS_TABLE_ID,
+            api_key,
+            formula=formula
+        )
+
+        for record in records:
+            project_map[record["id"]] = record.get("fields", {}).get("Project Name", "Unknown Project")
+
+    return project_map
+
+
 def parse_project_from_task(task_name: str) -> tuple[str, str]:
     """
     Parse task name and project from the Task field.
@@ -310,6 +450,57 @@ def is_promotional_content(media_id: str) -> bool:
             return True
 
     return False
+
+
+def get_project_from_media_id(media_id: str) -> str | None:
+    """
+    Look up project name from Media ID prefix.
+
+    Media IDs are typically 4-character prefixes (e.g., "2WLI" for Wisconsin Life)
+    followed by episode identifiers. This function extracts the prefix and
+    returns the associated project name if known.
+
+    Returns None if no match found.
+    """
+    if not media_id or len(media_id) < 4:
+        return None
+
+    # Extract first 4 characters as prefix
+    prefix = media_id[:4].upper()
+
+    return MEDIA_ID_PREFIX_MAP.get(prefix)
+
+
+def extract_completed_record_ids(content: str, section_start: str, section_end: str) -> set[str]:
+    """
+    Extract AirTable record IDs from completed tasks in an existing section.
+
+    Looks for patterns like:
+    - [x] [Title](https://airtable.com/.../recXXX)
+    - [X] [Title](https://airtable.com/.../recXXX)
+
+    Returns a set of record IDs (e.g., {"recXXX", "recYYY"})
+    """
+    completed_ids = set()
+
+    # Check if section exists
+    if section_start not in content or section_end not in content:
+        return completed_ids
+
+    # Extract section content
+    start_idx = content.index(section_start)
+    end_idx = content.index(section_end)
+    section_content = content[start_idx:end_idx]
+
+    # Pattern to match completed tasks with AirTable links
+    # Matches: - [x] or - [X] followed by markdown link to AirTable
+    pattern = r'-\s*\[[xX]\]\s*\[[^\]]+\]\(https://airtable\.com/[^/]+/[^/]+/(rec[a-zA-Z0-9]+)\)'
+
+    for match in re.finditer(pattern, section_content):
+        record_id = match.group(1)
+        completed_ids.add(record_id)
+
+    return completed_ids
 
 
 def sanitize_filename(name: str) -> str:
@@ -378,54 +569,57 @@ def find_project_note(base_name: str, vault_path: Path) -> Path | None:
     - "LEAD - {base_name}"
     - "{base_name}"
 
+    Also tries PROJECT_ALIASES if the base name doesn't match directly.
+
     Returns the path if found, None otherwise.
     Skips the archive folder.
     """
-    # Search for any file containing the base name
-    # Use a broader search pattern then filter
-    search_pattern = f"*{base_name}*.md"
+    # Try both the base name and any alias
+    names_to_try = [base_name]
+    if base_name in PROJECT_ALIASES:
+        names_to_try.append(PROJECT_ALIASES[base_name])
 
-    # Prioritize exact matches and LEAD-prefixed versions
-    exact_matches = []
-    lead_matches = []
-    other_matches = []
+    for name in names_to_try:
+        # Search for any file containing the name
+        # Use a broader search pattern then filter
+        search_pattern = f"*{name}*.md"
 
-    for path in vault_path.rglob(search_pattern):
-        if not path.is_file():
-            continue
-        # Skip archive folder
-        if "/4 - ARCHIVE/" in str(path):
-            continue
-        # Skip .obsidian folder
-        if "/.obsidian/" in str(path):
-            continue
+        # Prioritize exact matches and LEAD-prefixed versions
+        exact_matches = []
+        lead_matches = []
 
-        filename = path.stem  # filename without .md
+        for path in vault_path.rglob(search_pattern):
+            if not path.is_file():
+                continue
+            # Skip archive folder
+            if "/4 - ARCHIVE/" in str(path):
+                continue
+            # Skip .obsidian folder
+            if "/.obsidian/" in str(path):
+                continue
 
-        # Exact match (just the base name)
-        if filename == base_name:
-            exact_matches.append(path)
-        # Prefixed match (LEAD, QUICK, WEEKLY, etc.)
-        elif filename in [
-            f"LEAD — {base_name}",
-            f"LEAD - {base_name}",
-            f"QUICK — {base_name}",
-            f"QUICK - {base_name}",
-            f"WEEKLY — {base_name}",
-            f"WEEKLY - {base_name}",
-        ]:
-            lead_matches.append(path)
-        # Other match containing the name
-        else:
-            other_matches.append(path)
+            filename = path.stem  # filename without .md
 
-    # Return in priority order: prefixed first, then exact, then skip others
-    if lead_matches:
-        return lead_matches[0]
-    if exact_matches:
-        return exact_matches[0]
-    # Skip other matches to avoid false positives
-    # (e.g., "Meeting about Whoopensocker" when looking for "Whoopensocker")
+            # Exact match (just the name)
+            if filename == name:
+                exact_matches.append(path)
+            # Prefixed match (LEAD, QUICK, WEEKLY, etc.)
+            elif filename in [
+                f"LEAD — {name}",
+                f"LEAD - {name}",
+                f"QUICK — {name}",
+                f"QUICK - {name}",
+                f"WEEKLY — {name}",
+                f"WEEKLY - {name}",
+            ]:
+                lead_matches.append(path)
+            # Skip other matches to avoid false positives
+
+        # Return in priority order: prefixed first, then exact
+        if lead_matches:
+            return lead_matches[0]
+        if exact_matches:
+            return exact_matches[0]
 
     return None
 
@@ -434,13 +628,18 @@ def generate_airtable_section(
     project_name: str,
     project_data: dict,
     today: datetime.date,
-    now: str
+    now: str,
+    completed_ids: set[str] = None
 ) -> str:
     """
     Generate just the AirTable tasks section for embedding in an existing note.
 
     This creates a marked section that can be replaced on subsequent syncs.
+    Items with IDs in completed_ids will be skipped (already marked complete in Obsidian).
     """
+    if completed_ids is None:
+        completed_ids = set()
+
     lines = [
         AIRTABLE_SECTION_START,
         "## AirTable Tasks",
@@ -451,7 +650,7 @@ def generate_airtable_section(
 
     has_content = False
 
-    # Ongoing assignments
+    # Ongoing assignments (not checkboxes, so don't filter by completed_ids)
     if project_data["ongoing"]:
         has_content = True
         lines.append("### Ongoing Assignments")
@@ -461,12 +660,13 @@ def generate_airtable_section(
         lines.append("")
 
     # Blocked tasks (overdue > 30 days)
-    if project_data["blocked"]:
+    blocked_tasks = [t for t in project_data["blocked"] if t["id"] not in completed_ids]
+    if blocked_tasks:
         has_content = True
         lines.append("### ⚠️ Blocked")
         lines.append("*Overdue more than 30 days*")
         lines.append("")
-        for task in project_data["blocked"]:
+        for task in blocked_tasks:
             days_overdue = (today - task["due_date"]).days if task["due_date"] else 0
             lines.append(f"- [ ] [{task['task']}]({task['link']}) *(due {task['due_date']}, {days_overdue}d overdue)*")
         lines.append("")
@@ -478,7 +678,7 @@ def generate_airtable_section(
     ordered_statuses.extend(sorted(remaining_statuses))
 
     for status in ordered_statuses:
-        status_tasks = project_data["by_status"][status]
+        status_tasks = [t for t in project_data["by_status"][status] if t["id"] not in completed_ids]
         if not status_tasks:
             continue
 
@@ -502,6 +702,104 @@ def generate_airtable_section(
 
     lines.append("*This section is automatically synced from AirTable.*")
     lines.append(AIRTABLE_SECTION_END)
+
+    return "\n".join(lines)
+
+
+def generate_sst_section(
+    sst_items: list[dict],
+    today: datetime.date,
+    now: str,
+    completed_ids: set[str] = None
+) -> str:
+    """
+    Generate a separate SST Content section for embedding in a project note.
+
+    Uses distinct markers (SST_SECTION_START/END) so it can be updated
+    independently from the AirTable Tasks section.
+
+    Args:
+        sst_items: List of SST items for this project
+        today: Current date for overdue calculations
+        now: Timestamp string for "last synced"
+        completed_ids: Set of record IDs already marked complete in Obsidian (to skip)
+
+    Returns:
+        Markdown string with the SST section
+    """
+    if completed_ids is None:
+        completed_ids = set()
+
+    # Filter out completed items
+    active_items = [item for item in sst_items if item.get("id") not in completed_ids]
+
+    if not active_items:
+        return ""
+
+    lines = [
+        SST_SECTION_START,
+        "## Content Pipeline",
+        "",
+        f"> **Last synced:** {now}",
+        "",
+    ]
+
+    # Group by category for cleaner display
+    by_category = defaultdict(list)
+    for item in active_items:
+        by_category[item.get("category", "other")].append(item)
+
+    # Category display order and labels
+    category_labels = {
+        "ready_for_review": "Ready for Review",
+        "recently_passed_qc": "Recently Passed QC",
+        "overdue": "Overdue",
+    }
+
+    for category in ["overdue", "ready_for_review", "recently_passed_qc"]:
+        items = by_category.get(category, [])
+        if not items:
+            continue
+
+        label = category_labels.get(category, category.replace("_", " ").title())
+        if category == "overdue":
+            lines.append(f"### ⚠️ {label}")
+        else:
+            lines.append(f"### {label}")
+        lines.append("")
+
+        for item in items:
+            title = item.get("title", "Untitled")
+            link = item.get("link", "")
+            due_date = item.get("due_date")
+            premiere = item.get("premiere_date") or item.get("digital_premiere")
+            content_type = item.get("content_type", "")
+
+            # Build task line with Obsidian Tasks plugin format
+            task_parts = [f"- [ ] [{title}]({link})"]
+
+            # Add due date in Obsidian Tasks format if available
+            if due_date:
+                task_parts.append(f" 📅 {due_date}")
+
+            lines.append("".join(task_parts))
+
+            # Add metadata on next line
+            meta_parts = []
+            if premiere:
+                meta_parts.append(f"Premiere: {premiere}")
+            if content_type:
+                meta_parts.append(content_type)
+            if item.get("status"):
+                meta_parts.append(f"Status: {item['status']}")
+
+            if meta_parts:
+                lines.append(f"  - *{' | '.join(meta_parts)}*")
+
+        lines.append("")
+
+    lines.append("*This section is automatically synced from AirTable SST.*")
+    lines.append(SST_SECTION_END)
 
     return "\n".join(lines)
 
@@ -530,6 +828,37 @@ def update_note_with_airtable_section(note_path: Path, airtable_section: str) ->
             else:
                 content += "\n\n"
         new_content = content + "---\n\n" + airtable_section + "\n"
+
+    note_path.write_text(new_content)
+
+
+def update_note_with_sst_section(note_path: Path, sst_section: str) -> None:
+    """
+    Update an existing note by replacing or appending the SST Content section.
+
+    Uses separate markers (SST_SECTION_START/END) from the Tasks section.
+    Always appends at the very end of the note if not already present.
+    """
+    if not sst_section:
+        return
+
+    content = note_path.read_text()
+
+    # Check if note already has an SST section
+    if SST_SECTION_START in content and SST_SECTION_END in content:
+        # Replace existing section
+        start_idx = content.index(SST_SECTION_START)
+        end_idx = content.index(SST_SECTION_END) + len(SST_SECTION_END)
+        new_content = content[:start_idx] + sst_section + content[end_idx:]
+    else:
+        # Append section at end (after any existing AirTable Tasks section)
+        # Ensure there's a separator before the new section
+        if not content.endswith("\n\n"):
+            if content.endswith("\n"):
+                content += "\n"
+            else:
+                content += "\n\n"
+        new_content = content + "---\n\n" + sst_section + "\n"
 
     note_path.write_text(new_content)
 
@@ -593,6 +922,64 @@ def group_tasks_by_project(tasks: dict) -> dict[str, dict]:
         task["project"] = PROFESSIONAL_DEV_PROJECT
         projects[PROFESSIONAL_DEV_PROJECT]["by_status"][task["status"]].append(task)
         projects[PROFESSIONAL_DEV_PROJECT]["is_special"] = True
+
+    return dict(projects)
+
+
+def group_sst_by_project(
+    sst: dict[str, list[dict]],
+    project_id_map: dict[str, str]
+) -> dict[str, list[dict]]:
+    """
+    Reorganize SST content from category-first to project-first grouping.
+
+    Project matching priority:
+    1. Linked Project record ID (if present and in project_id_map)
+    2. Media ID prefix matching (using MEDIA_ID_PREFIX_MAP)
+    3. Falls back to CONTENT_FALLBACK_PROJECT
+
+    Args:
+        sst: Dict with keys ready_for_review, recently_passed_qc, overdue
+        project_id_map: Dict mapping project record IDs to project names
+
+    Returns:
+        Dict mapping project_name -> list of SST items (with category field added)
+        Items without a project go under CONTENT_FALLBACK_PROJECT
+    """
+    projects = defaultdict(list)
+
+    # Process all SST categories
+    for category, items in sst.items():
+        for item in items:
+            project_name = None
+
+            # Priority 1: Linked Project record
+            project_id = item.get("project_id")
+            if project_id and project_id in project_id_map:
+                project_name = project_id_map[project_id]
+
+            # Priority 2: Media ID prefix matching
+            if not project_name:
+                media_id = item.get("media_id", "")
+                project_from_media = get_project_from_media_id(media_id)
+                if project_from_media:
+                    project_name = project_from_media
+
+            # Priority 3: Fallback
+            if not project_name:
+                project_name = CONTENT_FALLBACK_PROJECT
+
+            # Add category info to item for rendering
+            item_with_category = dict(item)
+            item_with_category["category"] = category
+
+            projects[project_name].append(item_with_category)
+
+    # Sort items within each project by due_date (soonest first)
+    for project_name in projects:
+        projects[project_name].sort(
+            key=lambda x: x.get("due_date") or datetime.max.date()
+        )
 
     return dict(projects)
 
@@ -726,12 +1113,21 @@ def fetch_sst_content(api_key: str) -> dict[str, list[dict]]:
         if is_promotional_content(media_id):
             continue
 
+        # Get project ID (linked record) and premiere date for due date calculation
+        project_ids = fields.get("Project", [])
+        project_id = project_ids[0] if project_ids else None
+        premiere = parse_date(fields.get("Digital Premiere", "")) or parse_date(fields.get("Premiere Date/Time", ""))
+        due_date = (premiere - timedelta(days=30)) if premiere else None
+
         categories["ready_for_review"].append({
             "id": record["id"],
             "title": make_sst_title(fields),
             "media_id": media_id,
             "content_type": fields.get("Full-Length, Clip, Livestream", ""),
             "link": format_sst_link(record["id"]),
+            "project_id": project_id,
+            "premiere_date": premiere,
+            "due_date": due_date,
         })
 
     # Fetch QC Passed (all, then filter by date in Python)
@@ -752,14 +1148,24 @@ def fetch_sst_content(api_key: str) -> dict[str, list[dict]]:
         qc_date = parse_date(fields.get("QC Date", ""))
 
         if qc_date and qc_date >= thirty_days_ago:
-            premiere = parse_date(fields.get("Digital Premiere", ""))
+            premiere = parse_date(fields.get("Digital Premiere", "")) or parse_date(fields.get("Premiere Date/Time", ""))
+            due_date = (premiere - timedelta(days=30)) if premiere else None
+
+            # Get project ID (linked record)
+            project_ids = fields.get("Project", [])
+            project_id = project_ids[0] if project_ids else None
+
             categories["recently_passed_qc"].append({
                 "id": record["id"],
                 "title": make_sst_title(fields),
+                "media_id": media_id,
                 "qc_date": qc_date,
                 "digital_premiere": premiere,
                 "content_type": fields.get("Full-Length, Clip, Livestream", ""),
                 "link": format_sst_link(record["id"]),
+                "project_id": project_id,
+                "premiere_date": premiere,
+                "due_date": due_date,
             })
 
     # Sort by QC date descending
@@ -791,16 +1197,26 @@ def fetch_sst_content(api_key: str) -> dict[str, list[dict]]:
             if is_promotional_content(media_id):
                 continue
 
-            premiere = parse_date(fields.get("Digital Premiere", ""))
+            premiere = parse_date(fields.get("Digital Premiere", "")) or parse_date(fields.get("Premiere Date/Time", ""))
 
             if premiere and premiere < today:
+                due_date = (premiere - timedelta(days=30)) if premiere else None
+
+                # Get project ID (linked record)
+                project_ids = fields.get("Project", [])
+                project_id = project_ids[0] if project_ids else None
+
                 categories["overdue"].append({
                     "id": record["id"],
                     "title": make_sst_title(fields),
+                    "media_id": media_id,
                     "digital_premiere": premiere,
                     "status": fields.get("Single Source Status (BETA)", ""),
                     "content_type": fields.get("Full-Length, Clip, Livestream", ""),
                     "link": format_sst_link(record["id"]),
+                    "project_id": project_id,
+                    "premiere_date": premiere,
+                    "due_date": due_date,
                 })
 
     # Deduplicate overdue
@@ -1374,6 +1790,23 @@ def main():
     print(f"  Recently Passed QC: {len(sst['recently_passed_qc'])}")
     print(f"  Overdue: {len(sst['overdue'])}")
 
+    # Resolve project names for SST items
+    print("Resolving SST project links...")
+    all_project_ids = set()
+    for category_items in sst.values():
+        for item in category_items:
+            if item.get("project_id"):
+                all_project_ids.add(item["project_id"])
+    project_id_map = fetch_project_names(list(all_project_ids), api_key)
+    print(f"  Resolved {len(project_id_map)} projects")
+
+    # Group SST by project
+    sst_by_project = group_sst_by_project(sst, project_id_map)
+    print(f"  SST distributed across {len(sst_by_project)} projects")
+    fallback_count = len(sst_by_project.get(CONTENT_FALLBACK_PROJECT, []))
+    if fallback_count > 0:
+        print(f"  ({fallback_count} items in fallback '{CONTENT_FALLBACK_PROJECT}')")
+
     if args.mode == "legacy":
         # Original single-file mode
         print("Generating markdown (legacy mode)...")
@@ -1406,6 +1839,7 @@ def main():
 
         notes_updated = []
         notes_created = []
+        matched_sst_projects = set()  # Track SST projects matched to task projects
 
         # Generate per-project notes
         for project_name, project_data in projects.items():
@@ -1422,10 +1856,38 @@ def main():
             base_name = extract_base_project_name(project_name)
             existing_note = find_project_note(base_name, OBSIDIAN_VAULT_PATH)
 
-            # Generate the AirTable section
+            # Extract completed IDs from existing note (if any)
+            completed_task_ids = set()
+            completed_sst_ids = set()
+            if existing_note and existing_note.exists():
+                existing_content = existing_note.read_text()
+                completed_task_ids = extract_completed_record_ids(
+                    existing_content, AIRTABLE_SECTION_START, AIRTABLE_SECTION_END
+                )
+                completed_sst_ids = extract_completed_record_ids(
+                    existing_content, SST_SECTION_START, SST_SECTION_END
+                )
+
+            # Generate the AirTable section (skipping completed items)
             airtable_section = generate_airtable_section(
-                project_name, project_data, today, now
+                project_name, project_data, today, now, completed_task_ids
             )
+
+            # Check for matching SST content for this project
+            # Try both full project name and base name since SST uses Project table names
+            sst_items = sst_by_project.get(project_name, [])
+            matched_sst_key = project_name if sst_items else None
+            if not sst_items:
+                # Try matching by base name (SST projects may have different naming)
+                for sst_proj_name, items in sst_by_project.items():
+                    sst_base = extract_base_project_name(sst_proj_name)
+                    if sst_base == base_name:
+                        sst_items = items
+                        matched_sst_key = sst_proj_name
+                        break
+            if matched_sst_key:
+                matched_sst_projects.add(matched_sst_key)
+            sst_section = generate_sst_section(sst_items, today, now, completed_sst_ids) if sst_items else ""
 
             if existing_note:
                 # Update existing note with AirTable section
@@ -1434,10 +1896,17 @@ def main():
                     print(f"PROJECT: {project_name}")
                     print(f"  Base name: {base_name}")
                     print(f"  Would UPDATE existing note: {existing_note}")
+                    if sst_items:
+                        print(f"  SST items: {len(sst_items)}")
                     print(f"{'=' * 60}")
                     print(airtable_section[:500] + "..." if len(airtable_section) > 500 else airtable_section)
+                    if sst_section:
+                        print("\n--- SST SECTION ---")
+                        print(sst_section[:500] + "..." if len(sst_section) > 500 else sst_section)
                 else:
                     update_note_with_airtable_section(existing_note, airtable_section)
+                    if sst_section:
+                        update_note_with_sst_section(existing_note, sst_section)
                     notes_updated.append(existing_note)
             else:
                 # Create new note from template in inbox
@@ -1450,36 +1919,119 @@ def main():
                     print(f"PROJECT: {project_name}")
                     print(f"  Base name: {base_name}")
                     print(f"  Would CREATE new note: {filepath}")
+                    if sst_items:
+                        print(f"  SST items: {len(sst_items)}")
                     print(f"{'=' * 60}")
                     print(airtable_section[:500] + "..." if len(airtable_section) > 500 else airtable_section)
+                    if sst_section:
+                        print("\n--- SST SECTION ---")
+                        print(sst_section[:500] + "..." if len(sst_section) > 500 else sst_section)
                 else:
                     create_new_project_note(filepath, title, airtable_section)
+                    if sst_section:
+                        update_note_with_sst_section(filepath, sst_section)
                     notes_created.append(filepath)
 
-        # Generate Content Pipeline note (still uses full-note approach)
-        sst_count = len(sst["overdue"]) + len(sst["ready_for_review"]) + len(sst["recently_passed_qc"])
-        if sst_count > 0:
-            filename = sanitize_filename(CONTENT_PIPELINE_PROJECT) + ".md"
-            existing_path = find_existing_note(filename, OBSIDIAN_VAULT_PATH)
-            filepath = existing_path if existing_path else output_dir / filename
-            markdown = generate_content_pipeline_markdown(sst, now)
+        # Handle SST items for projects that have SST content but no tasks
+        # (These weren't processed in the main tasks loop above)
+        # Iterate over a copy since we may add to fallback during iteration
+        for sst_project_name in list(sst_by_project.keys()):
+            # Skip if already matched to a task project, or if it's the fallback project
+            if sst_project_name in matched_sst_projects:
+                continue
+            if sst_project_name == CONTENT_FALLBACK_PROJECT:
+                continue  # Handle fallback separately below
+
+            sst_items = sst_by_project[sst_project_name]
+
+            # This project has SST content but no tasks - add SST section only
+            base_name = extract_base_project_name(sst_project_name)
+            existing_note = find_project_note(base_name, OBSIDIAN_VAULT_PATH)
+
+            # Extract completed SST IDs from existing note (if any)
+            completed_sst_ids = set()
+            if existing_note and existing_note.exists():
+                existing_content = existing_note.read_text()
+                completed_sst_ids = extract_completed_record_ids(
+                    existing_content, SST_SECTION_START, SST_SECTION_END
+                )
+
+            sst_section = generate_sst_section(sst_items, today, now, completed_sst_ids)
+
+            if existing_note:
+                if args.dry_run:
+                    print(f"\n{'=' * 60}")
+                    print(f"SST-ONLY PROJECT: {sst_project_name}")
+                    print(f"  Base name: {base_name}")
+                    print(f"  Would UPDATE existing note: {existing_note}")
+                    print(f"  SST items: {len(sst_items)}")
+                    print(f"{'=' * 60}")
+                    print(sst_section[:500] + "..." if len(sst_section) > 500 else sst_section)
+                else:
+                    update_note_with_sst_section(existing_note, sst_section)
+                    if existing_note not in notes_updated:
+                        notes_updated.append(existing_note)
+            else:
+                # No existing note found - these items go to fallback
+                sst_by_project[CONTENT_FALLBACK_PROJECT] = (
+                    sst_by_project.get(CONTENT_FALLBACK_PROJECT, []) + sst_items
+                )
+
+        # Handle fallback note for unmatched SST items (WEEKLY — Content Posting)
+        fallback_items = sst_by_project.get(CONTENT_FALLBACK_PROJECT, [])
+        if fallback_items:
+            fallback_filename = f"WEEKLY — {CONTENT_FALLBACK_PROJECT}.md"
+            existing_fallback = find_existing_note(fallback_filename, OBSIDIAN_VAULT_PATH)
+            fallback_path = existing_fallback if existing_fallback else output_dir / fallback_filename
+
+            # Extract completed SST IDs from existing fallback note (if any)
+            completed_fallback_ids = set()
+            if existing_fallback and existing_fallback.exists():
+                existing_content = existing_fallback.read_text()
+                completed_fallback_ids = extract_completed_record_ids(
+                    existing_content, SST_SECTION_START, SST_SECTION_END
+                )
+
+            fallback_section = generate_sst_section(fallback_items, today, now, completed_fallback_ids)
 
             if args.dry_run:
                 print(f"\n{'=' * 60}")
-                print(f"CONTENT PIPELINE")
-                if existing_path:
-                    print(f"Would UPDATE existing: {filepath}")
+                print(f"FALLBACK: {CONTENT_FALLBACK_PROJECT}")
+                print(f"  Items: {len(fallback_items)}")
+                if existing_fallback:
+                    print(f"  Would UPDATE existing: {fallback_path}")
                 else:
-                    print(f"Would CREATE new: {filepath}")
+                    print(f"  Would CREATE new: {fallback_path}")
                 print(f"{'=' * 60}")
-                print(markdown[:500] + "..." if len(markdown) > 500 else markdown)
+                print(fallback_section[:500] + "..." if len(fallback_section) > 500 else fallback_section)
             else:
-                with open(filepath, "w") as f:
-                    f.write(markdown)
-                if existing_path:
-                    notes_updated.append(filepath)
+                if existing_fallback:
+                    update_note_with_sst_section(existing_fallback, fallback_section)
+                    notes_updated.append(fallback_path)
                 else:
-                    notes_created.append(filepath)
+                    # Create new fallback note with just the SST section
+                    fallback_content = f"""---
+tags:
+  - all
+  - pbswi
+  - airtable-sync
+  - content-pipeline
+created: {datetime.now().strftime("%Y-%m-%d")}
+status: active
+para: projects
+---
+
+# WEEKLY — {CONTENT_FALLBACK_PROJECT}
+
+Unmatched content items that couldn't be assigned to a specific project.
+
+---
+
+{fallback_section}
+"""
+                    fallback_path.parent.mkdir(parents=True, exist_ok=True)
+                    fallback_path.write_text(fallback_content)
+                    notes_created.append(fallback_path)
 
         # Generate Dashboard note (still uses full-note approach)
         dashboard_filename = "AIRTABLE Dashboard.md"

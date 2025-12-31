@@ -128,3 +128,151 @@ The script enforces strict write scopes to protect existing data:
 **Wrong checklist content**
 - Edit the `checklists` object in the script
 - Ensure the `checklistMapping` points to the correct key
+
+---
+
+## sync_airtable_to_obsidian.py
+
+Syncs PBS Wisconsin task and content data from AirTable to Obsidian project notes.
+
+### Overview
+
+This script fetches tasks from AirTable (Mark's Calendar view) and SST (Single Source of Truth) content, then embeds the data into existing Obsidian project notes or creates new ones.
+
+### Features
+
+#### Task Sync
+- Fetches tasks from the "Mark's Calendar" AirTable view
+- Groups tasks by project and status
+- Highlights blocked items (overdue > 30 days)
+- Shows ongoing/milestone assignments separately
+- Filters out terminal statuses (Complete, Cancelled, Denied, Published, Approved)
+
+#### SST Content Sync
+- Distributes SST content items to their related project notes
+- Calculates due dates as 30 days before premiere date
+- Filters out promotional content (FILL*, PNGV*, 4MBR* prefixes)
+- Uses separate section markers from tasks to avoid conflicts
+
+#### Smart Project Matching
+
+The script uses multiple strategies to match SST content to the correct Obsidian note:
+
+1. **Linked Project Record** - Primary method using AirTable's Project field
+2. **Media ID Prefix** - Fallback using 4-character Media ID prefixes (e.g., `9UNP` → University Place)
+3. **Project Aliases** - Maps AirTable names to Obsidian note names (e.g., "University Place" → "UPlace")
+4. **Base Name Extraction** - Strips prefixes like "ED:" and suffixes like "| FY26"
+5. **Fallback Note** - Unmatched items go to "WEEKLY — Content Posting"
+
+#### Completed Items Preservation
+
+When syncing, items already marked complete (`[x]`) in Obsidian are preserved and not re-added. This allows you to check off items in Obsidian without them reappearing on the next sync.
+
+#### Section Markers
+
+The script uses HTML comment markers to identify sync sections:
+
+```markdown
+<!-- AIRTABLE_SYNC_START -->
+## AirTable Tasks
+...
+<!-- AIRTABLE_SYNC_END -->
+
+<!-- AIRTABLE_SST_START -->
+## Content Pipeline
+...
+<!-- AIRTABLE_SST_END -->
+```
+
+This allows sections to be updated without affecting manually-written content.
+
+### Usage
+
+```bash
+# Normal sync (updates existing notes, creates new ones in inbox)
+python3 scripts/sync_airtable_to_obsidian.py
+
+# Preview without writing
+python3 scripts/sync_airtable_to_obsidian.py --dry-run
+
+# Legacy mode (single AIRTABLE.md file)
+python3 scripts/sync_airtable_to_obsidian.py --mode legacy
+```
+
+### Configuration
+
+#### Environment
+
+The script reads the AirTable API key from:
+1. `/Users/mriechers/Developer/airtable-mcp-server/.env` (AIRTABLE_API_KEY=...)
+2. Environment variable `AIRTABLE_API_KEY`
+
+#### AirTable IDs
+
+| Resource | ID |
+|----------|-----|
+| Base | `appZ2HGwhiifQToB6` |
+| Tasks Table | `tblHjG4gyTLO8OeQd` |
+| SST Table | `tblTKFOwTvK7xw1H5` |
+| Projects Table | `tblU9LfZeVNicdB5e` |
+| Mark's Calendar View | `viwsCw3IFVehzcNxs` |
+| Task Assignments Interface | `pagOoMi0UkplilONL` |
+| SST Interface | `pagCh7J2dYzqPC3bH` |
+
+#### Project Aliases
+
+Edit `PROJECT_ALIASES` in the script to map AirTable project names to Obsidian note names:
+
+```python
+PROJECT_ALIASES = {
+    "University Place": "UPlace",
+    "The Great Wisconsin Quilt Show": "Quilt Show",
+    "Wisconsin Life": "WI Life",
+    "Wisconsin Foodie": "WI Foodie",
+    "John McGivern's Main Streets": "Main Streets",
+}
+```
+
+#### Media ID Prefix Map
+
+The script includes a mapping of 4-character Media ID prefixes to project names (e.g., `9UNP` → University Place). This is used as a fallback when SST items don't have a linked Project record.
+
+To add new prefixes, edit `MEDIA_ID_PREFIX_MAP` in the script. Reference: `knowledge/Media ID Prefixes.md`
+
+### Output Locations
+
+| Content | Location |
+|---------|----------|
+| New project notes | `0 - INBOX/LEAD — {name}.md` |
+| Existing notes | Updated in place |
+| Fallback content | `0 - INBOX/WEEKLY — Content Posting.md` |
+| Dashboard | `0 - INBOX/AIRTABLE Dashboard.md` |
+
+### Note Structure
+
+New notes are created from a template with:
+- YAML frontmatter (tags, created date, status, para location)
+- Tasks query block for Obsidian Tasks plugin
+- Resources section
+- Notes section
+- AirTable sync section (at bottom)
+
+### Archive Handling
+
+The script skips the "4 - ARCHIVE" folder when searching for existing notes, so archived projects won't be updated.
+
+### Task Filtering
+
+#### Included
+- Tasks due within 2 weeks or overdue
+- Ongoing/Milestone assignments (no due date required)
+- Professional development tasks
+- Time off entries
+
+#### Excluded
+- Tasks due more than 2 weeks out
+- Terminal statuses: Complete, Cancelled, Denied, Published, Approved
+
+#### SST Filtering
+- Excludes promotional content: FILL*, PNGV*, 4MBR* prefixes
+- Includes: Ready for Review, Recently Passed QC (last 30 days), Overdue items
